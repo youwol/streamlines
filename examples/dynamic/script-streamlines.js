@@ -10,9 +10,8 @@ const model = new arch.Model()
 model.setHalfSpace( false )
 model.setMaterial ( 0.25, 1, 1000 )
 model.addSurface  ( new arch.Surface([-0.5,-0.5,-1, 0.5,-0.5,-1, 0.5,0.5,0, -0.5,0.5,0], [0,1,2, 0,2,3]) )
-model.addRemote   ( new arch.UserRemote( (x,y,z) => [0,0.1,0,0,0,-1] ) )
+model.addRemote   ( new arch.UserRemote( (x,y,z) => [0,0,0,0,0,-1] ) )
 const bbox  = model.bounds().map( v => v*2)
-// console.log(bbox)
 
 const solver   = new arch.Forward(model, 'seidel', 1e-9, 200)
 solver.run()
@@ -22,9 +21,10 @@ const solution = new arch.Solution(model)
 const fieldAt = (v) => {
     const stress = solution.stressAt(v[0], v[1], v[2])
     const {values, vectors} = math.eigen(stress)
-    const k = 0
+    const i = 0
     // return [vectors[3], vectors[4], vectors[5]] // $$sigma_2$$
-    return [vectors[3*k], vectors[3*k+1], 0/*vectors[3*k+2]*/] // $$sigma_1$$ projected horizontally
+    return [vectors[3*i], vectors[3*i+1], 0]
+    // return [vectors[3*i], vectors[3*i+1], vectors[3*i+2]]
 }
 
 const dyn = new stream.DynanicStreamLines({
@@ -63,7 +63,7 @@ else {
     for (let i=0; i<n; ++i) {
         const x = bbox[0] + Lx * Math.random()
         const y = bbox[1] + Ly * Math.random()
-        const z = bbox[2] + Lz * Math.random()
+        const z = 0 - 1 * Math.random()
         streamlines.push( dyn.generate([x,y,z]) )
     }
 }

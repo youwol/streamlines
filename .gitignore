@@ -10,6 +10,7 @@ dist/index.d.ts
 dist/examples
 dist/tests
 dist/src
+.yw_pipeline/__pycache__/
 
 sources/
 

@@ -1,4 +1,5 @@
 import { vec } from "@youwol/math"
+import { BBox, Vector } from "./types"
 
 /**
  * @param v nothing, Vector2 or a number
@@ -46,4 +47,13 @@ export const setV3 = (v: vec.Vector3, x: number, y: number, z: number) => {
     v[1] = y
     v[2] = z
     return v
+}
+
+export function inside(bbox: BBox, p: Vector, tol = 1e-7) : boolean {
+    for (let i = 0; i < 3; ++i) {
+        if (p[i] < (bbox[i] - tol) || p[i] > (bbox[i+3] + tol)) {
+            return false
+        }
+    }
+    return true
 }

@@ -74,7 +74,8 @@ export class StreamLinesOnSurface {
     private ptsOctree_: Octree = undefined
     private borderEdges_: Array<Halfedge> = []
     private curSL: Array<vec.Vector3> = []
-    private solution_: Serie[] = []
+    // private solution_: Serie[] = []
+    private solution_: number[] = []
     private verbose: boolean = false
     //private nodes_octree_: Octree = undefined
 
@@ -137,7 +138,7 @@ export class StreamLinesOnSurface {
 
         // Hack: Simplify the lines !!!!!!!!!
         console.warn('TODO: decimate the generated lines?')
-        //this.solution_ = this.solution_.map( line => simplify(line, 1, true) ) // HAVE TO DEAL WITH THAT SHIT !!!
+        // this.solution_ = this.solution_.map( line => simplify(line, 1, true) ) // HAVE TO DEAL WITH THAT SHIT !!!
 
         return this.solution_
     }
@@ -220,34 +221,42 @@ export class StreamLinesOnSurface {
                         lines.push(...point)
                     }
                 })
-                if (lines.length>0) this.solution_.push(
-                    Serie.create({array: lines, itemSize: 3})
-                )
+                if (lines.length>0) {
+                    // this.solution_.push(
+                    //     Serie.create({array: lines, itemSize: 3})
+                    // )
+                    this.solution_.push(...lines)
+                }
             }
         })
 
         // ---------------------------------------
     }
 
-    private genOneSL(seed_polygon: Facet) {
-        if (seed_polygon['visited'] === true) return
-        seed_polygon['visited'] = true
+    private genOneSL(seedPoly: Facet) {
+        if (seedPoly['visited'] === true) return
+        seedPoly['visited'] = true
 
         // compute barycenter
-        const barycenter = [0,0,0] as vec.Vector3
-        const nop = seed_polygon.nodes
-        nop.forEach( node => vec.add(barycenter,node.posVec3) )
-        vec.scale(barycenter, 1./3.)
+        let barycenter = [0,0,0] as vec.Vector3
+        let nop = seedPoly.nodes
+        nop.forEach( node => {
+            /*vec.add(barycenter,node.posVec3)*/
+            barycenter[0] +=node.posVec3[0]
+            barycenter[1] +=node.posVec3[1]
+            barycenter[2] +=node.posVec3[2]
+        })
+        barycenter = vec.scale(barycenter, 1./3.) as vec.Vector3
 
         // draw the stream line starting from the seed, in the 2 directions
         if (!this.tooNear(barycenter)) {
             this.curSL.push(barycenter)
-            this.genSL(barycenter, seed_polygon, false)
-            this.genSL(barycenter, seed_polygon, true )
+            this.genSL(barycenter, seedPoly, false)
+            this.genSL(barycenter, seedPoly, true )
         }
     }
 
-    private genSL(iP: vec.Vector3, polygon: Facet, useNegVec: boolean) {
+    private genSL(iP: vec.Vector3, polygon: Facet, reverse: boolean) {
         const nop = polygon.nodes
 
         const triangle_plane = new Plane(nop[0].posVec3, nop[1].posVec3, nop[2].posVec3)
@@ -256,14 +265,14 @@ export class StreamLinesOnSurface {
             return // ERROR no projection found 1
         }
 
-        const hv = [0,0] as vec.Vector2
-        if (!this.projectedVector(pIP, polygon, [0,0], useNegVec, true, hv)) {
+        let hv = [0,0] as vec.Vector2
+        if (!this.projectedVector(pIP, polygon, [0,0], reverse, true, hv)) {
             return
         }
 
-        vec.scale(vec.normalize(hv), this.integStep_)
+        hv = vec.scale(vec.normalize(hv), this.integStep_) as vec.Vector2
         const nextPIP = vec.clone(pIP) as vec.Vector2
-        vec.add(nextPIP, hv)
+        hv = vec.add(nextPIP, hv) as vec.Vector2
         const nextIP = [0,0,0] as vec.Vector3
         if (!triangle_plane.fromUV(nextPIP, nextIP, false)) {
             return //no projection found ERROR
@@ -274,7 +283,7 @@ export class StreamLinesOnSurface {
         }
 
         this.curSL.push(iP)
-        this.recursiveSL(polygon, iP, nextIP, undefined, useNegVec, 40)
+        this.recursiveSL(polygon, iP, nextIP, undefined, reverse, 40)
     }
 
     private tooNear(iP: vec.Vector3): boolean {
@@ -300,7 +309,7 @@ export class StreamLinesOnSurface {
         polygon: Facet,
         fSP: vec.Vector3,
         sSP: vec.Vector3,
-        entryEdge: Halfedge, useNegVec: boolean,
+        entryEdge: Halfedge, reverse: boolean,
         maxIter: number): void
     {
         if(maxIter == 0)  {
@@ -394,9 +403,9 @@ export class StreamLinesOnSurface {
                     // const mate_polygon =  wrapper.get_incident_border_polygon(edge, polygon) <------ CHECK HERE
                     // const mate_polygon = edge.opposite.facet
                     const mate_polygon = this.borderPolygon(edge, polygon)
-                    if(mate_polygon !== undefined && mate_polygon['visited']===false) {
+                    if (mate_polygon !== undefined && mate_polygon['visited']===false) {
                         // <--------------- CHECK HERE if we use return ... or not
-                        this.recursiveSL(mate_polygon, uIP, pSSP, edge, useNegVec, maxIter - 1)
+                        this.recursiveSL(mate_polygon, uIP, pSSP, edge, reverse, maxIter - 1)
                         //return
                     } else {
                         return
@@ -417,19 +426,19 @@ export class StreamLinesOnSurface {
             }
 
             this.curSL.push(pSSP)
-            const pIV = [0,0] as vec.Vector2
-            if (!this.projectedVector(pSSP_uv,  polygon, pSV, useNegVec, false, pIV)) {
+            let pIV = [0,0] as vec.Vector2
+            if (!this.projectedVector(pSSP_uv,  polygon, pSV, reverse, false, pIV)) {
                 return
             }
 
-            vec.scale(vec.normalize( pIV) ,this.integStep_)
+            pIV = vec.scale(vec.normalize( pIV) ,this.integStep_) as vec.Vector2
             const projected_next_point = vec.add(vec.clone(pSSP_uv), pIV) as vec.Vector2
             const next_point = [0,0,0] as vec.Vector3
             if (!triangle_plane.fromUV(projected_next_point, next_point, false)) {
                 return // ERROR no projection found
             }
 
-            this.recursiveSL(polygon, pSSP, next_point, undefined, useNegVec, maxIter - 1)
+            this.recursiveSL(polygon, pSSP, next_point, undefined, reverse, maxIter - 1)
         }
     }
 
@@ -447,7 +456,7 @@ export class StreamLinesOnSurface {
         pIC: vec.Vector2, 
         polygon: Facet,
         streamDir: vec.Vector2, 
-        useNegVec: boolean, 
+        reverse: boolean, 
         first_step: boolean, 
         pV: vec.Vector2 // <--- return value as well
     ): boolean 
@@ -505,7 +514,7 @@ export class StreamLinesOnSurface {
             if (vec.dot(pV0, pV2) < 0) vec.scale(pV2, -1)
         }
 
-        if (useNegVec) {
+        if (reverse) {
             vec.scale(pV0, -1)
             vec.scale(pV1, -1)
             vec.scale(pV2, -1)

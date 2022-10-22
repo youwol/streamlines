@@ -1,21 +1,6 @@
 import { Serie } from "@youwol/dataframe"
-
-
-/**
- * Drfinition of a point or a vector in 3D space
- */
-export type Vector = [number, number, number]
-
-/**
- * A bounding is given by its components
- * `[minx, miny, minz, maxx, maxy, maxz]`
- */
-export type BBox = [number, number, number, number, number, number]
-
-/**
- * The field function
- */
-export type FieldAt = (p: Vector) => Vector
+import { BBox, FieldAt, Vector } from "./types"
+import { inside } from "./utils"
 
 /**
  * Generate dynalically streamlines given a field function. Each generated streamline
@@ -102,7 +87,7 @@ export class DynanicStreamLines {
             p[1] = y/l*this.dt + current[1]
             p[2] = z/l*this.dt + current[2]
 
-            if (this.inside(p) === false) {
+            if (inside(this.bbox, p, 1e-7) === false) {
                 break
             }
 
@@ -116,14 +101,4 @@ export class DynanicStreamLines {
 
         return Serie.create({array: points, itemSize: 3})
     }
-
-    private inside(p: Vector, tol = 1e-7) : boolean {
-        for (let i = 0; i < 3; ++i) {
-            if (p[i] < (this.bbox[i] - tol) || p[i] > (this.bbox[i+3] + tol)) {
-                return false
-            }
-        }
-        return true
-    }
-    
 }

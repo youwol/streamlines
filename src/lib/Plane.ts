@@ -151,7 +151,7 @@ export class Plane {
     }
 
     // TODO Check
-    fromUV(uv: vec.Vector2, result: vec.Vector3, normalized_coords: boolean): boolean {
+    fromUV(uv: vec.Vector2, result: vec.Vector3, normalized_coords: boolean=true): boolean {
         const z = vec.clone(this.m_normal) as vec.Vector3
 
         let x = vec.create(this.m_p1, this.m_p2) as vec.Vector3
@@ -187,9 +187,10 @@ export class Plane {
         return true
     }
 
-    project(p: vec.Vector3, result?: vec.Vector3): any {
+    project(p: vec.Vector3, result?: vec.Vector3): number {
         if (result === undefined) {
-            return this.projectVector(p)
+            // return this.projectVector(p)
+            result = this.projectVector(p)
         }
         if (this.position(p) === Position.COPLANAR) {
             setV3(result, p[0], p[1], p[2])
@@ -201,7 +202,7 @@ export class Plane {
         const i_up = up.intersectPlane(this.m_p1, this.m_p2, this.m_p3)
         if (i_up.id == 1) {
             result = createV3(i_up.point)
-            return  vec.norm( vec.create(p, i_up.point) )
+            return  vec.norm( vec.create(p, result) )
     	} else if (i_up.id == -1) {
 		    // colinearity
 		    return -1
@@ -212,7 +213,7 @@ export class Plane {
 
         if (i_down.id == 1) {
             result = createV3(i_down.point)
-            return vec.norm( vec.create(p, i_down.point) )
+            return vec.norm( vec.create(p, result) )
 	    } else {
 		    // colinearity
 		    return -1
@@ -237,7 +238,7 @@ export class Plane {
     }
 
     private toUVFromVector(v: vec.Vector3, result: vec.Vector2): boolean {
-        const projected_vector = this.project(v)
+        const projected_vector = this.projectVector(v)
         const p1_uv = createV2()
     
         const r1 = this.toUV(this.m_p1, p1_uv, false)
