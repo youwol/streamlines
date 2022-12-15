@@ -1,5 +1,5 @@
-import { vec } from "@youwol/math"
-import { BBox, Vector } from "./types"
+import { vec } from '@youwol/math'
+import { BBox, Vector } from './types'
 
 /**
  * @param v nothing, Vector2 or a number
@@ -15,7 +15,7 @@ export const createV2 = (v?: vec.Vector2 | number, y?: number) => {
     if (y !== undefined) {
         return [v as number, y] as vec.Vector2
     }
-    return (v!==undefined ? [...v as vec.Vector2] : [0,0]) as vec.Vector2
+    return (v !== undefined ? [...(v as vec.Vector2)] : [0, 0]) as vec.Vector2
 }
 
 /**
@@ -30,10 +30,12 @@ export const createV2 = (v?: vec.Vector2 | number, y?: number) => {
  * ```
  */
 export const createV3 = (v?: vec.Vector3 | number, y?: number, z?: number) => {
-    if (y!==undefined && z!==undefined) {
+    if (y !== undefined && z !== undefined) {
         return [v as number, y, z] as vec.Vector3
     }
-    return (v!==undefined ? [...v as vec.Vector3] : [0,0,0]) as vec.Vector3
+    return (
+        v !== undefined ? [...(v as vec.Vector3)] : [0, 0, 0]
+    ) as vec.Vector3
 }
 
 export const setV2 = (v: vec.Vector2, x: number, y: number) => {
@@ -49,9 +51,9 @@ export const setV3 = (v: vec.Vector3, x: number, y: number, z: number) => {
     return v
 }
 
-export function inside(bbox: BBox, p: Vector, tol = 1e-7) : boolean {
+export function inside(bbox: BBox, p: Vector, tol = 1e-7): boolean {
     for (let i = 0; i < 3; ++i) {
-        if (p[i] < (bbox[i] - tol) || p[i] > (bbox[i+3] + tol)) {
+        if (p[i] < bbox[i] - tol || p[i] > bbox[i + 3] + tol) {
             return false
         }
     }

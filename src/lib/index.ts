@@ -94,5 +94,5 @@ export * from './types'
 //     clone(): Vector3 {
 //         return Vector3.create(this.x)
 //     }
-    
+
 // }
