@@ -63,9 +63,9 @@ export class Plane {
     }
 
     static fromPointAndNormal(p: vec.Vector3, normal: vec.Vector3): Plane {
-        let x = normal[0]
-        let y = normal[1]
-        let z = normal[2]
+        const x = normal[0]
+        const y = normal[1]
+        const z = normal[2]
 
         let vec2 = createV3()
         if (Math.abs(y) > 1e-3) {
@@ -116,7 +116,7 @@ export class Plane {
     }
 
     flipOrientation(): Plane {
-        let p2 = vec.clone(this.m_p2) as vec.Vector3
+        const p2 = vec.clone(this.m_p2) as vec.Vector3
         this.m_p2 = this.m_p3
         this.m_p3 = p2
         this.m_normal = vec.scale(this.m_normal, -1) as vec.Vector3
@@ -131,8 +131,12 @@ export class Plane {
         //throw new Error('TODO...')
 
         const val = orient3dfast(this.m_p1, this.m_p2, this.m_p3, p)
-        if (val < 0) return Position.SIDE_A
-        if (val > 0) return Position.SIDE_B
+        if (val < 0) {
+            return Position.SIDE_A
+        }
+        if (val > 0) {
+            return Position.SIDE_B
+        }
         return Position.COPLANAR
     }
 
@@ -181,13 +185,15 @@ export class Plane {
     fromUV(
         uv: vec.Vector2,
         result: vec.Vector3,
-        normalized_coords: boolean = true,
+        normalized_coords = true,
     ): boolean {
         const z = vec.clone(this.m_normal) as vec.Vector3
 
         let x = vec.create(this.m_p1, this.m_p2) as vec.Vector3
         const xn = vec.norm(x)
-        if (xn === 0) return false
+        if (xn === 0) {
+            return false
+        }
         x = vec.normalize(x) as vec.Vector3
 
         let y = vec.cross(z, x) as vec.Vector3

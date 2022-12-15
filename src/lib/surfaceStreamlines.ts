@@ -1,10 +1,14 @@
-import { Surface, Facet, Node, Halfedge } from '@youwol/geometry'
-import { BBox, inflateBBox } from '@youwol/geometry'
+import {
+    Surface,
+    Facet,
+    Node,
+    Halfedge,
+    BBox,
+    inflateBBox,
+} from '@youwol/geometry'
 import { Octree } from './Octree'
 import { Plane } from './plane'
 import { Ray2D } from './Ray2D'
-
-import { simplify } from '@youwol/geometry'
 
 import { vec, minMax } from '@youwol/math'
 import { Serie } from '@youwol/dataframe'
@@ -61,20 +65,20 @@ export function surfaceStreamlines({
 
 export class StreamLinesOnSurface {
     private surface: Surface = undefined
-    private first_calculus_: boolean = true
+    private first_calculus_ = true
     private integStep_ = 0
     private d_sep_ = 0
     private vectorAttr: Serie = undefined
     private seedAttr: Serie = undefined
-    private seedThresholdUp: number = 1
-    private seedThresholdDown: number = 0
+    private seedThresholdUp = 1
+    private seedThresholdDown = 0
     private bbox3_: BBox = undefined
     private ptsOctree_: Octree = undefined
     private borderEdges_: Array<Halfedge> = []
     private curSL: Array<vec.Vector3> = []
     // private solution_: Serie[] = []
     private solution_: number[] = []
-    private verbose: boolean = false
+    private verbose = false
     //private nodes_octree_: Octree = undefined
 
     generate({
@@ -101,7 +105,7 @@ export class StreamLinesOnSurface {
         if (this.first_calculus_) {
             this.first_calculus_ = false
             this.surface = Surface.create(nodes, faces)
-            let bbox = this.surface.bbox
+            const bbox = this.surface.bbox
             this.integStep_ =
                 Math.max(bbox.xLength, bbox.yLength, bbox.zLength) / istep
             this.d_sep_ = this.integStep_
@@ -190,7 +194,7 @@ export class StreamLinesOnSurface {
             attr = attr.map((v: number) => (v - mm[0]) / (mm[1] - mm[0]))
 
             // faces: Sort an array of faced according the attribute
-            let faces: Array<Facet> = []
+            const faces: Array<Facet> = []
             this.surface.facets.forEach((facet) => {
                 faces.push(facet)
             })
@@ -235,12 +239,14 @@ export class StreamLinesOnSurface {
     }
 
     private genOneSL(seedPoly: Facet) {
-        if (seedPoly['visited'] === true) return
+        if (seedPoly['visited'] === true) {
+            return
+        }
         seedPoly['visited'] = true
 
         // compute barycenter
         let barycenter = [0, 0, 0] as vec.Vector3
-        let nop = seedPoly.nodes
+        const nop = seedPoly.nodes
         nop.forEach((node) => {
             /*vec.add(barycenter,node.posVec3)*/
             barycenter[0] += node.posVec3[0]
@@ -400,7 +406,7 @@ export class StreamLinesOnSurface {
 
                 const iC = createV2() as vec.Vector2
 
-                let distances = {
+                const distances = {
                     dist: 0,
                     other_dist: 0,
                 }
@@ -564,12 +570,17 @@ export class StreamLinesOnSurface {
             return false // no projection found
         }
 
-        if (vec.norm(pV0) === 0 || vec.norm(pV1) === 0 || vec.norm(pV2) === 0)
+        if (vec.norm(pV0) === 0 || vec.norm(pV1) === 0 || vec.norm(pV2) === 0) {
             return false
+        }
 
         if (first_step) {
-            if (vec.dot(pV0, pV1) < 0) vec.scale(pV1, -1)
-            if (vec.dot(pV0, pV2) < 0) vec.scale(pV2, -1)
+            if (vec.dot(pV0, pV1) < 0) {
+                vec.scale(pV1, -1)
+            }
+            if (vec.dot(pV0, pV2) < 0) {
+                vec.scale(pV2, -1)
+            }
         }
 
         if (reverse) {
@@ -580,9 +591,15 @@ export class StreamLinesOnSurface {
 
         if (!first_step) {
             if (streamDir[0] != 0 && streamDir[1] != 0) {
-                if (vec.dot(pV0, streamDir) < 0) vec.scale(pV0, -1)
-                if (vec.dot(pV1, streamDir) < 0) vec.scale(pV1, -1)
-                if (vec.dot(pV2, streamDir) < 0) vec.scale(pV2, -1)
+                if (vec.dot(pV0, streamDir) < 0) {
+                    vec.scale(pV0, -1)
+                }
+                if (vec.dot(pV1, streamDir) < 0) {
+                    vec.scale(pV1, -1)
+                }
+                if (vec.dot(pV2, streamDir) < 0) {
+                    vec.scale(pV2, -1)
+                }
             }
         }
 

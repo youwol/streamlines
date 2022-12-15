@@ -1,4 +1,4 @@
-import { vec, sub, add } from '@youwol/math'
+import { vec } from '@youwol/math'
 // See also https://github.com/vanruesc/math-ds/tree/master/src
 
 export class Ray {
@@ -11,8 +11,11 @@ export class Ray {
         this.dir_ = vec.clone(direction) as vec.Vector3
 
         this.valid_ = true
-        if (vec.norm(this.dir_) == 0) this.valid_ = false
-        else vec.normalize(this.dir_)
+        if (vec.norm(this.dir_) == 0) {
+            this.valid_ = false
+        } else {
+            vec.normalize(this.dir_)
+        }
     }
 
     get origin(): vec.Vector3 {
@@ -30,11 +33,12 @@ export class Ray {
         p2: vec.Vector3,
         p3: vec.Vector3,
     ): { id: number; point: vec.Vector3 } {
-        if (!this.valid)
+        if (!this.valid) {
             return {
                 point: [0, 0, 0],
                 id: 0,
             }
+        }
 
         const res = intersectRay3DPlane(this, new Triangle(p1, p2, p3))
         if (res.flag === 1) {
@@ -72,11 +76,12 @@ function intersectRay3DPlane(
     const u = vec.sub(T.V1, T.V0) as vec.Vector3
     const v = vec.sub(T.V2, T.V0) as vec.Vector3
     const n = vec.cross(u, v)
-    if (vec.norm(n) < eps)
+    if (vec.norm(n) < eps) {
         return {
             point: undefined,
             flag: -1,
         }
+    }
 
     const dir = R.direction
     const w0 = vec.sub(R.origin, T.V0)
@@ -103,11 +108,12 @@ function intersectRay3DPlane(
     if (Math.abs(r) < eps) {
         r = 0
     }
-    if (r < 0)
+    if (r < 0) {
         return {
             point: undefined,
             flag: 0,
         }
+    }
 
     const I = vec.add(R.origin, vec.scale(dir, r)) as vec.Vector3
     return {

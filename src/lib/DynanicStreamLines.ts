@@ -72,7 +72,9 @@ export class DynanicStreamLines {
                 bbox[5] - bbox[2],
             )
             this.dt = m / 500
-        } else this.dt = dt
+        } else {
+            this.dt = dt
+        }
     }
 
     /**
@@ -80,9 +82,9 @@ export class DynanicStreamLines {
      */
     generate(seed: Vector): Serie {
         let nbPoints = 0
-        let points: number[] = [...seed]
+        const points: number[] = [...seed]
 
-        let current = [...seed] as Vector
+        const current = [...seed] as Vector
 
         while (nbPoints < this.maxPoints) {
             const p = this.fieldAt(current)

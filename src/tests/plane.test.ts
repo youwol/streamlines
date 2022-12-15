@@ -2,8 +2,8 @@ import { vec } from '@youwol/math'
 import { Plane } from '../lib/Plane'
 
 const check = (plane: Plane, x: number, y: number, z: number) => {
-    let p2: vec.Vector2 = [0, 0]
-    let p3: vec.Vector3 = [0, 0, 0]
+    const p2: vec.Vector2 = [0, 0]
+    const p3: vec.Vector3 = [0, 0, 0]
 
     expect(plane.toUV([x, y, z], p2)).toBeTruthy()
     expect(plane.fromUV(p2, p3)).toBeTruthy()
@@ -56,12 +56,12 @@ test('Plane test 2', () => {
     {
         const plane = new Plane([0, 0, 0], [0, 1, 0], [1, 0, 0])
 
-        let p1 = [0.5, 0.5, +1] as vec.Vector3
-        let p2 = [0.5, 0.5, -1] as vec.Vector3
-        let p3 = [0.5, 0.5, 0] as vec.Vector3
-        let p1r: vec.Vector3 = [0, 0, 0]
-        let p2r: vec.Vector3 = [0, 0, 0]
-        let p3r: vec.Vector3 = [0, 0, 0]
+        const p1 = [0.5, 0.5, +1] as vec.Vector3
+        const p2 = [0.5, 0.5, -1] as vec.Vector3
+        const p3 = [0.5, 0.5, 0] as vec.Vector3
+        const p1r: vec.Vector3 = [0, 0, 0]
+        const p2r: vec.Vector3 = [0, 0, 0]
+        const p3r: vec.Vector3 = [0, 0, 0]
 
         const d1 = plane.project(p1, p1r)
         const d2 = plane.project(p2, p2r)
@@ -89,9 +89,9 @@ test('Plane test 2', () => {
     {
         const plane = new Plane([0, 0, 0], [1, 0, 0], [0, 1, 0])
 
-        let p1 = [0.5, 0.5, +1] as vec.Vector3
-        let p2 = [0.5, 0.5, -1] as vec.Vector3
-        let p3 = [0.5, 0.5, 0] as vec.Vector3
+        const p1 = [0.5, 0.5, +1] as vec.Vector3
+        const p2 = [0.5, 0.5, -1] as vec.Vector3
+        const p3 = [0.5, 0.5, 0] as vec.Vector3
         let p1r: vec.Vector3
         let p2r: vec.Vector3
         let p3r: vec.Vector3

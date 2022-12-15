@@ -1,6 +1,6 @@
 import { Serie } from '@youwol/dataframe'
 import { vec } from '@youwol/math'
-import { BBox, FieldAndNormalAt, FieldAt, Vector } from './types'
+import { BBox, FieldAndNormalAt, Vector } from './types'
 import { inside } from './utils'
 
 /**
@@ -39,7 +39,9 @@ export class DynanicStreamBands {
                 bbox[5] - bbox[2],
             )
             this.dt = m / 500
-        } else this.dt = dt
+        } else {
+            this.dt = dt
+        }
     }
 
     /**
@@ -47,11 +49,11 @@ export class DynanicStreamBands {
      */
     generate(seed: Vector): { positions: Serie; indices: Serie } {
         let nbPoints = 0
-        let C = [...seed] as Vector // current point
-        let positions: number[] = [...seed]
-        let indices: number[] = []
+        const C = [...seed] as Vector // current point
+        const positions: number[] = [...seed]
+        const indices: number[] = []
         // let index: number = 0
-        let i: number = 0
+        let i = 0
 
         let prevA: vec.Vector3 = undefined
 

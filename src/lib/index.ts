@@ -1,5 +1,3 @@
-import { create } from 'domain'
-
 export { surfaceStreamlines, StreamLinesOnSurface } from './surfaceStreamlines'
 export * from './DynanicStreamLines'
 export * from './DynanicStreamBands'

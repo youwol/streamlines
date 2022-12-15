@@ -123,7 +123,7 @@ export class Octree {
     }
 
     private get_actual_max_depth(): number {
-        let o = { depth: 0 }
+        const o = { depth: 0 }
         this.root_.do_get_actual_max_depth(o)
         return o.depth
     }

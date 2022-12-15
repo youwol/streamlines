@@ -33,7 +33,9 @@ export class Ray2D {
         intersection: vec.Vector2,
         distances: { dist: number; other_dist: number },
     ): boolean {
-        if (this.valid_ === false) return false
+        if (this.valid_ === false) {
+            return false
+        }
 
         const e = this.dir_[0]
         const f = this.dir_[1]
