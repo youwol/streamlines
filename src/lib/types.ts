@@ -3,18 +3,18 @@
  */
 export type Vector = [number, number, number]
 
- /**
-  * A bounding is given by its components
-  * `[minx, miny, minz, maxx, maxy, maxz]`
-  */
+/**
+ * A bounding is given by its components
+ * `[minx, miny, minz, maxx, maxy, maxz]`
+ */
 export type BBox = [number, number, number, number, number, number]
- 
- /**
-  * The field function
-  */
+
+/**
+ * The field function
+ */
 export type FieldAt = (p: Vector) => Vector
 
 /**
-  * The normal function
-  */
-export type FieldAndNormalAt = (p: Vector) => {field: Vector, normal: Vector}
+ * The normal function
+ */
+export type FieldAndNormalAt = (p: Vector) => { field: Vector; normal: Vector }

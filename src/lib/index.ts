@@ -1,5 +1,3 @@
-import { create } from 'domain'
-
 export { surfaceStreamlines, StreamLinesOnSurface } from './surfaceStreamlines'
 export * from './DynanicStreamLines'
 export * from './DynanicStreamBands'
@@ -94,5 +92,5 @@ export * from './types'
 //     clone(): Vector3 {
 //         return Vector3.create(this.x)
 //     }
-    
+
 // }
