@@ -7,7 +7,7 @@ import {
     inflateBBox,
 } from '@youwol/geometry'
 import { Octree } from './Octree'
-import { Plane } from './plane'
+import { Plane } from './Plane'
 import { Ray2D } from './Ray2D'
 
 import { vec, minMax } from '@youwol/math'

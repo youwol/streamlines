@@ -41,7 +41,7 @@ export class Plane {
     private m_p1: vec.Vector3 = undefined
     private m_p2: vec.Vector3 = undefined
     private m_p3: vec.Vector3 = undefined
-    private m_d: number
+    private m_d = 0
     private tol_ = 1e-6
 
     constructor(p1: vec.Vector3, p2: vec.Vector3, p3: vec.Vector3) {
