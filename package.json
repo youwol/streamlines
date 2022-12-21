@@ -15,17 +15,16 @@
     "doc": "rm -fr dist/docs && typedoc src/ src/examples --exclude src/lib --exclude src/tests --media ./media --excludePrivate --disableSources --out dist/docs --includeVersion --hideGenerator",
     "publish-npm-public": "yarn build:prod && yarn test-coverage && yarn publish --access public"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {},
   "devDependencies": {
     "@types/filesystem": "0.0.30",
     "@types/jest": "26.0.22",
     "@types/node": "14.14.37",
-    "@youwol/dataframe": "^0.0.30",
-    "@youwol/geometry": "^0.0.8",
-    "@youwol/io": "^0.0.20",
-    "@youwol/math": "^0.0.18",
+    "@youwol/dataframe": "^0.0.37",
+    "@youwol/geometry": "^0.0.21",
+    "@youwol/io": "^0.0.25-wip",
+    "@youwol/math": "^0.0.26",
     "eslint": "7.23.0",
     "jest": "26.6.3",
     "jest-junit": "12.0.0",

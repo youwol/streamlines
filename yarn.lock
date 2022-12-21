@@ -880,25 +880,32 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@youwol/dataframe@^0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@youwol/dataframe/-/dataframe-0.0.30.tgz#32d20a246b0d0d1dcec93e2852d38078ab2a5b69"
-  integrity sha512-Ne+zfudjSPtt9Kqw8DTkHjMLF/pUiqDhtOIr665y9I7PNA1ro8pMgAcvhBtYxSRWIB982dWU6HSFFJhIAIV1Rg==
+"@youwol/dataframe@^0.0.37":
+  version "0.0.37"
+  resolved "https://registry.yarnpkg.com/@youwol/dataframe/-/dataframe-0.0.37.tgz#4bf388c231d335beb2d2628684be10283110d5f7"
+  integrity sha512-FrjK6zeAyN+JsXsCv3dfpDciJw4GHaOtYoFyoQUOZd8oV2GASZ5x3N2oi2l7O0lharXX+dcaMina97yOaEDXjA==
 
-"@youwol/geometry@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@youwol/geometry/-/geometry-0.0.8.tgz#58eaedd57da7c311bbe576b1cda5fb4e97cc5e4a"
-  integrity sha512-EotPO1aZDRnVdHEgQCmJvqtfFrk5SpCp7SRmqSas0gkc9vQtoKjYktXsH29qYqV03B2RYUAx3j2k9aFeLxflaA==
+"@youwol/geometry@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@youwol/geometry/-/geometry-0.0.21.tgz#820f76a69e6d1cb6b9392520aba64b326e042047"
+  integrity sha512-SZI1z9iOTmqaG4HPUueC+Vh4/LDpI4AKUOy1l3jSa64MOBUOi3get64hx3nBrQL6D1vQcy48tSmpbqJ8J6cUVg==
 
-"@youwol/io@^0.0.20":
+"@youwol/io@0.0.20":
   version "0.0.20"
   resolved "https://registry.yarnpkg.com/@youwol/io/-/io-0.0.20.tgz#1101293674f39f3e2a9fe28124c9f0856442d8f8"
   integrity sha512-GJvQGoY0vN65gOYe+AcV79LsupaJc5tsoeXEcomwJtgsvB+FThyAzx+dane4+YBKSbK24CyURTbbkILbghC6EA==
 
-"@youwol/math@^0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@youwol/math/-/math-0.0.18.tgz#dc825c664b8edec3b19a2b7170183ec816bed268"
-  integrity sha512-yNFHXTM9GOK7hnl9ZbUuMojIptrbzsOou53xIUt4yl+2w15Y7KYnS7BSRrEWfmTtk8auejdd8z5ATy/HfEJo6g==
+"@youwol/io@^0.0.25-wip":
+  version "0.0.25-wip"
+  resolved "https://registry.yarnpkg.com/@youwol/io/-/io-0.0.25-wip.tgz#d602752615876383b7ba169acc6d68c9addc16ca"
+  integrity sha512-C3A2MMgq3yut2+xgY2V11iOh7LNsGKVyciD73Kvwi+tN/fGkVksr2j4qXUJXeR57+0lr/f3TLr1C2Si1RBjMvw==
+  dependencies:
+    "@youwol/io" "0.0.20"
+
+"@youwol/math@^0.0.26":
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/@youwol/math/-/math-0.0.26.tgz#637cb282d1a25595232e4413de91eb30d14ad2b7"
+  integrity sha512-xlYHfqj8+vfMBIbtBREZi6gZ6Ypuosbthg9+XNlML1hzSbtV59NjumSVK3jzN/HP/T6CluXZQJ5NFaP/Ex+TGQ==
 
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"

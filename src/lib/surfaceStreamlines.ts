@@ -4,7 +4,7 @@ import { Octree } from './Octree'
 import { Plane }  from './plane'
 import { Ray2D }  from './Ray2D'
 
-import { simplify } from '@youwol/geometry'
+// import { simplify } from '@youwol/geometry'
 
 import { vec, minMax } from '@youwol/math'
 import { Serie } from '@youwol/dataframe'
